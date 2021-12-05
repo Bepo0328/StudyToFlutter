@@ -1,0 +1,30 @@
+{
+	"folders": [
+		{
+			"name": "Python",
+			"path": "..\\..\\Python"
+		},
+		{
+			"name": "하울스타그램 예제",
+			"path": "D:\\[USB] 64GB\\하울스타그램 예제"
+		},
+		{
+			"name": "Application",
+			"path": "..\\..\\Android\\Application"
+		},
+		{
+			"path": "..\\..\\Users\\wjsdb\\Downloads\\패스트컴퍼스"
+		},
+		{
+			"path": "..\\..\\Github"
+		},
+		{
+			"path": ".."
+		}
+	],
+	"settings": {
+		"php.validate.run": "onType",
+		"php.validate.enable": false,
+		"liveServer.settings.multiRootWorkspaceName": "패스트컴퍼스"
+	}
+}
