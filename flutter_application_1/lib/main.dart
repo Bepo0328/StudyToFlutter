@@ -7,26 +7,33 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: "Flutter App",
-      theme: ThemeData(primarySwatch: Colors.blue),
-      home: const MyHomePage(),
+    return const MaterialApp(
+      title: "Charactor card",
+      home: MyCard(),
     );
   }
 }
 
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({Key? key}) : super(key: key);
+class MyCard extends StatelessWidget {
+  const MyCard({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Flutter app"),
+        title: const Text("BBANTO"),
+        centerTitle: true,
+        backgroundColor: Colors.redAccent,
+        elevation: 0.0,
       ),
       body: Center(
         child: Column(
-          children: const <Widget>[Text("Hello"), Text("Hello"), Text("Hello")],
+          // mainAxisAlignment: MainAxisAlignment.center,
+          children: const [
+            Text("Hello"),
+            Text("Hello"),
+            Text("Hello"),
+          ],
         ),
       ),
     );
