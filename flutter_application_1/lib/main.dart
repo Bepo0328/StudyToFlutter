@@ -50,8 +50,18 @@ class MyHomePage extends StatelessWidget {
                 backgroundImage: AssetImage("assets/cat1.png"),
                 backgroundColor: Colors.white,
               ),
-              accountEmail: Text("CAT"),
-              accountName: Text("cat@cat.com"),
+              otherAccountsPictures: [
+                CircleAvatar(
+                  backgroundImage: AssetImage("assets/cat3.png"),
+                  backgroundColor: Colors.white,
+                ),
+                // CircleAvatar(
+                //   backgroundImage: AssetImage("assets/cat3.png"),
+                //   backgroundColor: Colors.white,
+                // ),
+              ],
+              accountName: Text("CAT"),
+              accountEmail: Text("cat@cat.com"),
               onDetailsPressed: () {
                 print("arrow is clicked");
               },
@@ -60,7 +70,40 @@ class MyHomePage extends StatelessWidget {
                   borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(40.0),
                       bottomRight: Radius.circular(40.0))),
-            )
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.home,
+                color: Colors.grey[850],
+              ),
+              title: Text("Home"),
+              onTap: () {
+                print("Home is clicked");
+              },
+              trailing: Icon(Icons.add),
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.settings,
+                color: Colors.grey[850],
+              ),
+              title: Text("Setting"),
+              onTap: () {
+                print("Setting is clicked");
+              },
+              trailing: Icon(Icons.add),
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.question_answer,
+                color: Colors.grey[850],
+              ),
+              title: Text("Q&A"),
+              onTap: () {
+                print("Q&A is clicked");
+              },
+              trailing: Icon(Icons.add),
+            ),
           ],
         ),
       ),
