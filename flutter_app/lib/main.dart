@@ -8,48 +8,50 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: "Column & Row",
-      theme: ThemeData(
-        primarySwatch: Colors.green
-      ),
-      home: MyPage(),
+      title: "First page",
+      theme: ThemeData(primarySwatch: Colors.blue),
+      home: FirstPage(),
     );
   }
 }
 
-class MyPage extends StatelessWidget {
-  const MyPage({Key? key}) : super(key: key);
+class FirstPage extends StatelessWidget {
+  const FirstPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context2) {
     return Scaffold(
-      backgroundColor: Colors.teal,
-      body: SafeArea(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Container(
-                height: 100,
-                color: Colors.white,
-                child: Text("Container 1"),
-              ),
-              SizedBox(
-                width: 30.0,
-              ),
-              Container(
-                height: 100,
-                color: Colors.blue,
-                child: Text("Container 2"),
-              ),
-              Container(
-                height: 100,
-                color: Colors.red,
-                child: Text("Container 3"),
-              ),
-            ],
-          ),
+      appBar: AppBar(
+        title: Text("First page"),
+      ),
+      body: Center(
+        child: RaisedButton(
+          child: Text("Go to the Second page"),
+          onPressed: () {
+            Navigator.push(context2,
+                MaterialPageRoute(builder: (context) => SecondPage()));
+          },
+        ),
       ),
     );
   }
 }
 
+class SecondPage extends StatelessWidget {
+  const SecondPage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext ctx) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Second page"),
+      ),
+      body: Center(
+        child:
+            RaisedButton(child: Text("Go to the First page"), onPressed: () {
+              Navigator.pop(ctx);
+            }),
+      ),
+    );
+  }
+}
