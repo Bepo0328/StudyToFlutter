@@ -29,3 +29,23 @@ Flutter - Weather App
       - appBar, backgroundColor, textStyle..
 
 	3. 매개 역할자로써의 API
+
+***
+# 3. Exception handling
+	- try ~ catch
+    try {
+      실행에 실패할 수도 있는 코드
+    } catch(e) {
+      코드 실행에 실패할 경우 출력될 내용 (예외처리 구문)
+    }
+
+***
+# 5. Jason parsing
+	JSON vs. XML
+	XML: eXtensible Markup Language
+      - <key>value</key>
+      - <날씨앱>
+      -   <api>api설명</api>
+      -   <json>JSON설명</json>
+	http: <p></p>, <h1></h1>
+    JSON: JavaScript Object Notation
