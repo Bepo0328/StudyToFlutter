@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_chatting/config/palette.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_chatting/screens/chat_screen.dart';
 
 class LoginSignUpScreen extends StatefulWidget {
   const LoginSignUpScreen({Key? key}) : super(key: key);
@@ -9,6 +13,7 @@ class LoginSignUpScreen extends StatefulWidget {
 }
 
 class _LoginSignUpScreenState extends State<LoginSignUpScreen> {
+  final _authentication = FirebaseAuth.instance;
   bool isSignUpScreen = true;
   bool _isObscure = true;
   final _formKey = GlobalKey<FormState>();
@@ -199,6 +204,9 @@ class _LoginSignUpScreenState extends State<LoginSignUpScreen> {
                                   onSaved: (value) {
                                     userName = value!;
                                   },
+                                  onChanged: (value) {
+                                    userName = value;
+                                  },
                                   decoration: const InputDecoration(
                                     prefixIcon: Icon(
                                       Icons.account_circle,
@@ -232,9 +240,11 @@ class _LoginSignUpScreenState extends State<LoginSignUpScreen> {
                                   height: 8.0,
                                 ),
                                 TextFormField(
+                                  keyboardType: TextInputType.emailAddress,
                                   key: const ValueKey(2),
                                   validator: (value) {
-                                    if (value!.isEmpty || value.contains('@')) {
+                                    if (value!.isEmpty ||
+                                        !value.contains('@')) {
                                       return 'Please enter a valid email address.';
                                     } else {
                                       return null;
@@ -242,6 +252,9 @@ class _LoginSignUpScreenState extends State<LoginSignUpScreen> {
                                   },
                                   onSaved: (value) {
                                     userEmail = value!;
+                                  },
+                                  onChanged: (value) {
+                                    userEmail = value;
                                   },
                                   decoration: const InputDecoration(
                                     prefixIcon: Icon(
@@ -278,7 +291,7 @@ class _LoginSignUpScreenState extends State<LoginSignUpScreen> {
                                 TextFormField(
                                   key: const ValueKey(3),
                                   validator: (value) {
-                                    if (value!.isEmpty || value.length < 6) {
+                                    if (value!.isEmpty || value.length < 7) {
                                       return 'Please must be at least 7 characters long.';
                                     } else {
                                       return null;
@@ -286,6 +299,9 @@ class _LoginSignUpScreenState extends State<LoginSignUpScreen> {
                                   },
                                   onSaved: (value) {
                                     userPassword = value!;
+                                  },
+                                  onChanged: (value) {
+                                    userPassword = value;
                                   },
                                   obscureText: _isObscure,
                                   decoration: InputDecoration(
@@ -342,9 +358,11 @@ class _LoginSignUpScreenState extends State<LoginSignUpScreen> {
                             child: Column(
                               children: [
                                 TextFormField(
+                                  keyboardType: TextInputType.emailAddress,
                                   key: const ValueKey(4),
                                   validator: (value) {
-                                    if (value!.isEmpty || value.contains('@')) {
+                                    if (value!.isEmpty ||
+                                        !value.contains('@')) {
                                       return 'Please enter a valid email address.';
                                     } else {
                                       return null;
@@ -352,6 +370,9 @@ class _LoginSignUpScreenState extends State<LoginSignUpScreen> {
                                   },
                                   onSaved: (value) {
                                     userEmail = value!;
+                                  },
+                                  onChanged: (value) {
+                                    userEmail = value;
                                   },
                                   decoration: const InputDecoration(
                                     prefixIcon: Icon(
@@ -388,7 +409,7 @@ class _LoginSignUpScreenState extends State<LoginSignUpScreen> {
                                 TextFormField(
                                   key: const ValueKey(5),
                                   validator: (value) {
-                                    if (value!.isEmpty || value.length < 6) {
+                                    if (value!.isEmpty || value.length < 7) {
                                       return 'Please must be at least 7 characters long.';
                                     } else {
                                       return null;
@@ -396,6 +417,9 @@ class _LoginSignUpScreenState extends State<LoginSignUpScreen> {
                                   },
                                   onSaved: (value) {
                                     userPassword = value!;
+                                  },
+                                  onChanged: (value) {
+                                    userPassword = value;
                                   },
                                   obscureText: _isObscure,
                                   decoration: InputDecoration(
@@ -466,8 +490,53 @@ class _LoginSignUpScreenState extends State<LoginSignUpScreen> {
                     borderRadius: BorderRadius.circular(50.0),
                   ),
                   child: GestureDetector(
-                    onTap: () {
+                    onTap: () async {
                       _tryValidation();
+                      if (isSignUpScreen) {
+                        try {
+                          final newUser = await _authentication
+                              .createUserWithEmailAndPassword(
+                            email: userEmail,
+                            password: userPassword,
+                          );
+                          if (newUser.user != null) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) {
+                                return const ChatScreen();
+                              }),
+                            );
+                          }
+                        } catch (e) {
+                          print(e);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content:
+                                  Text('Please check your email and password'),
+                              backgroundColor: Colors.blue,
+                            ),
+                          );
+                        }
+                      } else {
+                        try {
+                          final newUser = await _authentication
+                              .signInWithEmailAndPassword(
+                            email: userEmail,
+                            password: userPassword,
+                          );
+
+                          if (newUser.user != null) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) {
+                                return const ChatScreen();
+                              }),
+                            );
+                          }
+                        } catch (e) {
+                          print(e);
+                        }
+                      }
                     },
                     child: Container(
                       decoration: BoxDecoration(
