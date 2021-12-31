@@ -3,6 +3,7 @@ import 'package:flutter_chatting/config/palette.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_chatting/screens/chat_screen.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class LoginSignUpScreen extends StatefulWidget {
   const LoginSignUpScreen({Key? key}) : super(key: key);
@@ -71,8 +72,9 @@ class _LoginSignUpScreenState extends State<LoginSignUpScreen> {
                             ),
                             children: [
                               TextSpan(
-                                text:
-                                    isSignUpScreen ? ' to Yummy Chat!' : ' back',
+                                text: isSignUpScreen
+                                    ? ' to Yummy Chat!'
+                                    : ' back',
                                 style: const TextStyle(
                                   letterSpacing: 1.0,
                                   fontSize: 25.0,
@@ -345,7 +347,8 @@ class _LoginSignUpScreenState extends State<LoginSignUpScreen> {
                                         fontSize: 14.0,
                                         color: Palette.textColor1,
                                       ),
-                                      contentPadding: const EdgeInsets.all(10.0),
+                                      contentPadding:
+                                          const EdgeInsets.all(10.0),
                                     ),
                                   ),
                                 ],
@@ -463,7 +466,8 @@ class _LoginSignUpScreenState extends State<LoginSignUpScreen> {
                                         fontSize: 14.0,
                                         color: Palette.textColor1,
                                       ),
-                                      contentPadding: const EdgeInsets.all(10.0),
+                                      contentPadding:
+                                          const EdgeInsets.all(10.0),
                                     ),
                                   ),
                                 ],
@@ -504,20 +508,27 @@ class _LoginSignUpScreenState extends State<LoginSignUpScreen> {
                               email: userEmail,
                               password: userPassword,
                             );
+
+                            await FirebaseFirestore.instance
+                                .collection('user')
+                                .doc(newUser.user!.uid)
+                                .set(
+                                    {'userName': userName, 'email': userEmail});
+
                             if (newUser.user != null) {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) {
-                                  return const ChatScreen();
-                                }),
-                              );
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(builder: (context) {
+                              //     return const ChatScreen();
+                              //   }),
+                              // );
                             }
                           } catch (e) {
                             print(e);
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
-                                content:
-                                    Text('Please check your email and password'),
+                                content: Text(
+                                    'Please check your email and password'),
                                 backgroundColor: Colors.blue,
                               ),
                             );
@@ -586,7 +597,8 @@ class _LoginSignUpScreenState extends State<LoginSignUpScreen> {
                 left: 0.0,
                 child: Column(
                   children: [
-                    Text(isSignUpScreen ? 'or Sign Up with' : 'or Sign In with'),
+                    Text(
+                        isSignUpScreen ? 'or Sign Up with' : 'or Sign In with'),
                     const SizedBox(
                       height: 10.0,
                     ),
