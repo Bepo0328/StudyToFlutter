@@ -33,9 +33,10 @@ class _MessagesState extends State<Messages> {
           reverse: true,
           itemCount: chatDocs.length,
           itemBuilder: (context, index) {
-            return ChatBubble(
+            return ChatBubbles(
               chatDocs[index]['text'],
               chatDocs[index]['userID'].toString() == user!.uid,
+              chatDocs[index]['userName'],
             );
           },
         );
